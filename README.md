@@ -4,6 +4,12 @@ Asistente local de preguntas sobre documentos (RAG: Retrieval-Augmented Generati
 
 > Principio de diseño: medir la calidad antes de presentar una respuesta como fiable.
 
+## Vista previa
+
+| Chat con citas y abstención | Dashboard de evaluación |
+| --- | --- |
+| ![Chat](docs/chat.png) | ![Dashboard](docs/dashboard.png) |
+
 ## 1. Qué problema resuelve
 
 Un LLM responde con aplomo aunque no sepa. En un sistema de consulta documental eso es peor que no responder. Este proyecto:
@@ -134,6 +140,11 @@ Además se comprobaron manualmente: endpoints, subida de documentos, rechazo de 
 5. Exponer todo con FastAPI y empaquetar con Docker Compose.
 6. Construir un conjunto de preguntas con respuesta de referencia y casos sin respuesta, y un runner que calcule acierto, F1, cobertura de evidencia y tasas de abstención.
 7. Iterar cambiando una variable por pasada y guardando cada informe en `reports/`.
+
+## Operación y resolución de problemas
+
+- Si cambias el índice de ChromaDB desde fuera de la API (por ejemplo con `docker compose exec` borrando fragmentos), reinicia la API con `docker compose restart api`; si no, las preguntas y `/api/evaluation/run` fallan con `'NoneType' object is not subscriptable`. Subir documentos por `/api/documents` o desde el chat no requiere reinicio.
+- La API y el dashboard son de uso local; ver la sección de seguridad antes de exponerlos.
 
 ## 9. Pendiente
 
