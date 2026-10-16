@@ -1,0 +1,200 @@
+{
+  "project": "RAG Evaluado",
+  "updated_at": "2026-10-16T15:21:18.683935+00:00",
+  "agents": {
+    "primary": 1,
+    "delegated": 0,
+    "staff": [
+      {
+        "id": "codex",
+        "name": "Codex",
+        "role": "JEFE · RAG Y ORQUESTACIÓN",
+        "description": "Jefe de proyecto · coordina el sistema y al equipo",
+        "task": "Cierre de documentación y relevo preparado para la siguiente sesión",
+        "status": "completed"
+      },
+      {
+        "id": "vega",
+        "name": "Vega",
+        "role": "FRONTEND · UX",
+        "description": "Interfaz de chat, carga de documentos y citas",
+        "task": "Chat listo · integrado y servido en el puerto 8001",
+        "status": "completed"
+      },
+      {
+        "id": "ada",
+        "name": "Ada",
+        "role": "QA · EVALUACIÓN",
+        "description": "Pruebas de fragmentación y métricas",
+        "task": "Revisión del runner y 8 pruebas offline correctas; estado e historial sin alteraciones por datasets temporales",
+        "status": "completed"
+      }
+    ],
+    "completed_delegates": 2,
+    "latest_interaction": {
+      "id": "2026-10-14-ada-codex-project-path",
+      "from_id": "ada",
+      "to_id": "codex",
+      "question": "Encontré dos copias del proyecto. ¿Trabajo en la carpeta del Escritorio OneDrive que usa Compose?",
+      "answer": "Sí. Compose utiliza la carpeta del Escritorio de OneDrive configurada en este equipo.",
+      "state": "resuelta",
+      "time": "18:20"
+    }
+  },
+  "current": {
+    "title": "Evaluación completada · resultados actualizados",
+    "state": "En curso",
+    "detail": "La pasada terminó. Se guardaron las métricas y el dashboard ya compara esta ejecución con las anteriores."
+  },
+  "stages": [
+    {
+      "name": "Estructura y API base",
+      "state": "Completado",
+      "detail": "FastAPI, configuración y documentación inicial."
+    },
+    {
+      "name": "Ingesta y recuperación",
+      "state": "Completado",
+      "detail": "Demo document indexed in ChromaDB; multilingual embeddings downloaded."
+    },
+    {
+      "name": "Construcción Docker",
+      "state": "Completado",
+      "detail": "Imagen API construida con PyTorch CPU."
+    },
+    {
+      "name": "Servicios locales",
+      "state": "Completado",
+      "detail": "Docker Compose activo; GET /health respondió 200."
+    },
+    {
+      "name": "Modelos locales",
+      "state": "Completado",
+      "detail": "Ollama y qwen2.5:3b instalados localmente."
+    },
+    {
+      "name": "Evaluación y métricas",
+      "state": "Completado",
+      "detail": "35 casos medidos con umbral 0.75; informe guardado en reports/latest.json."
+    },
+    {
+      "name": "Chat RAG para usuarios",
+      "state": "Completado",
+      "detail": "Vega integró carga de PDF/TXT/MD, preguntas y citas; http://localhost:8001/chat.html responde 200."
+    },
+    {
+      "name": "CI y publicación",
+      "state": "Pendiente",
+      "detail": "Git y remoto aún no configurados."
+    },
+    {
+      "name": "Pruebas offline",
+      "state": "Completado",
+      "detail": "Ada ejecutó 8 pruebas unitarias offline: 8 correctas. Verificó además que el dataset temporal no cambia el estado ni el historial del dashboard."
+    }
+  ],
+  "files": [
+    "app/main.py",
+    "app/api/routes.py",
+    "app/ingestion/chunking.py",
+    "app/retrieval/store.py",
+    "app/retrieval/answer.py",
+    "app/evaluation/runner.py",
+    "app/static/index.html",
+    "evals/manual_demo.md",
+    "evals/dataset.jsonl",
+    "Dockerfile",
+    "compose.yaml",
+    "README.md",
+    "archivo.md",
+    "app/static/chat.html",
+    "tests/test_ingestion_chunking.py",
+    "tests/test_evaluation_metrics.py",
+    "PROMPT_CONTINUACION.md"
+  ],
+  "activity": [
+    {
+      "time": "15:21",
+      "text": "Evaluación guardada: umbral 0.75, acierto 45.7%, falsas abstenciones 24.1%."
+    },
+    {
+      "time": "15:18",
+      "text": "Evaluación automática iniciada desde el proyecto."
+    },
+    {
+      "time": "15:16",
+      "text": "Evaluación guardada: umbral 0.75, acierto 42.9%, falsas abstenciones 31.0%."
+    },
+    {
+      "time": "15:11",
+      "text": "Evaluación automática iniciada desde el proyecto."
+    },
+    {
+      "time": "17:37",
+      "text": "Evaluación automática iniciada desde el proyecto."
+    },
+    {
+      "time": "18:34",
+      "text": "Verificación final: JavaScript del dashboard válido, dashboard/chat/API responden HTTP 200 y el contador muestra 0 agentes activos."
+    },
+    {
+      "time": "18:33",
+      "text": "El contador de agentes activos ahora se calcula desde el estado real de cada oficina; al cerrar esta sesión marca 0 activos."
+    },
+    {
+      "time": "18:31",
+      "text": "Ada completó la revisión del runner: 8 pruebas offline correctas; dataset, informes e historial del dashboard quedaron intactos."
+    }
+  ],
+  "evaluation": {
+    "total_cases": 35,
+    "accuracy_rate": 0.4571,
+    "answerable_mean_token_f1": 0.3604,
+    "citation_coverage": 1.0,
+    "citation_evidence_anchor_rate": 0.6897,
+    "unsupported_answer_rate_on_unanswerable": 0.0,
+    "correct_abstention_rate": 1.0,
+    "false_abstention_rate_on_answerable": 0.2414,
+    "faithfulness_judge_rate": null,
+    "faithfulness_judged_count": 0,
+    "model": "qwen2.5:3b",
+    "judge": "not run",
+    "history": [
+      {
+        "name": "Umbral 0,45 · inicial",
+        "threshold": 0.45,
+        "accuracy_rate": 0.2286,
+        "answerable_mean_token_f1": 0.0527,
+        "citation_evidence_anchor_rate": 0.069,
+        "false_abstention_rate_on_answerable": 0.931
+      },
+      {
+        "name": "Umbral 0,75 · actual",
+        "threshold": 0.75,
+        "accuracy_rate": 0.3429,
+        "answerable_mean_token_f1": 0.2129,
+        "citation_evidence_anchor_rate": 0.4483,
+        "false_abstention_rate_on_answerable": 0.5517
+      },
+      {
+        "name": "Umbral 0.75 · 16/10 15:16",
+        "threshold": 0.75,
+        "accuracy_rate": 0.4286,
+        "answerable_mean_token_f1": 0.3088,
+        "citation_evidence_anchor_rate": 0.5172,
+        "false_abstention_rate_on_answerable": 0.3103
+      },
+      {
+        "name": "Umbral 0.75 · 16/10 15:21",
+        "threshold": 0.75,
+        "accuracy_rate": 0.4571,
+        "answerable_mean_token_f1": 0.3604,
+        "citation_evidence_anchor_rate": 0.6897,
+        "false_abstention_rate_on_answerable": 0.2414
+      }
+    ],
+    "run_state": "completed",
+    "run_finished_at": "2026-10-16T15:21:18.683911+00:00",
+    "run_started_at": "2026-10-16T15:18:16.788718+00:00"
+  }
+}

@@ -1,0 +1,26 @@
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.pytest_cache/
+data/documents/*
+!data/documents/.gitkeep
+data/chroma/*
+!data/chroma/.gitkeep
+
+reports/*.json
+
+# Mantener el último informe y las mediciones publicadas; revisar antes de añadir nuevos informes.
+!reports/latest.json
+!reports/evaluation-20261014-155930.json
+!reports/evaluation-20261014-161534.json
+!reports/evaluation-20261016-152118.json
+
+# Seguridad / privacidad
+.env*
+*.pem
+*.key
+*.sqlite3
+graphify-out/
+PROMPT_CONTINUACION.md
+.claude/

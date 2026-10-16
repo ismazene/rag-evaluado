@@ -1,0 +1,8 @@
+﻿fastapi>=0.115,<1
+uvicorn[standard]>=0.30,<1
+pydantic-settings>=2.5,<3
+chromadb>=0.5,<2
+sentence-transformers>=3,<6
+pypdf>=5,<7
+python-multipart>=0.0.12,<1
+ollama>=0.4,<1

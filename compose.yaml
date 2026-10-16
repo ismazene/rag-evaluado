@@ -1,0 +1,34 @@
+services:
+  dashboard:
+    image: nginx:alpine
+    ports:
+      - "127.0.0.1:8001:80"
+    volumes:
+      - ./app/static:/usr/share/nginx/html:ro
+  api:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+      DOCUMENTS_DIR: /workspace/data/documents
+      CHROMA_DIR: /workspace/data/chroma
+    volumes:
+      - ./app:/workspace/app
+      - ./data:/workspace/data
+      - ./evals:/workspace/evals
+      - ./reports:/workspace/reports
+      - huggingface_cache:/root/.cache/huggingface
+    depends_on:
+      - ollama
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "127.0.0.1:11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  huggingface_cache:
+  ollama_data:

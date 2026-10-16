@@ -1,0 +1,35 @@
+﻿{"id":"orbe-01","question":"¿Cuánto dura la prueba gratuita?","reference_answer":"14 días","should_abstain":false,"evidence_terms":["14 días"]}
+{"id":"orbe-02","question":"¿Cuántos miembros admite la prueba?","reference_answer":"5 miembros","should_abstain":false,"evidence_terms":["5 miembros"]}
+{"id":"orbe-03","question":"¿Cuánto espacio incluye la prueba?","reference_answer":"1 GB","should_abstain":false,"evidence_terms":["1 GB"]}
+{"id":"orbe-04","question":"¿Qué formatos de archivo acepta Orbe?","reference_answer":"CSV y JSON","should_abstain":false,"evidence_terms":["CSV y JSON"]}
+{"id":"orbe-05","question":"¿Cuál es el tamaño máximo de archivo?","reference_answer":"25 MB","should_abstain":false,"evidence_terms":["25 MB"]}
+{"id":"orbe-06","question":"¿Qué datos incluye cada registro?","reference_answer":"Cliente, fecha y código","should_abstain":false,"evidence_terms":["cliente", "fecha", "código"]}
+{"id":"orbe-07","question":"¿Durante cuánto tiempo se conservan los registros?","reference_answer":"180 días","should_abstain":false,"evidence_terms":["180 días"]}
+{"id":"orbe-08","question":"¿La búsqueda distingue mayúsculas de minúsculas?","reference_answer":"No, no distingue entre mayúsculas y minúsculas","should_abstain":false,"evidence_terms":["no distingue entre mayúsculas y minúsculas"]}
+{"id":"orbe-09","question":"¿Cuántas palabras clave permite como máximo la búsqueda?","reference_answer":"10 palabras clave","should_abstain":false,"evidence_terms":["10 palabras clave"]}
+{"id":"orbe-10","question":"¿En qué formatos se exportan los resultados?","reference_answer":"CSV y PDF","should_abstain":false,"evidence_terms":["CSV o PDF"]}
+{"id":"orbe-11","question":"¿Cuál es la ruta base de la API?","reference_answer":"/v1","should_abstain":false,"evidence_terms":["/v1"]}
+{"id":"orbe-12","question":"¿Cómo se autentica un usuario en la API?","reference_answer":"Con tokens Bearer","should_abstain":false,"evidence_terms":["tokens Bearer"]}
+{"id":"orbe-13","question":"¿Cuánto tarda en caducar un token?","reference_answer":"60 minutos","should_abstain":false,"evidence_terms":["60 minutos"]}
+{"id":"orbe-14","question":"¿Cuál es el límite de solicitudes por minuto?","reference_answer":"120 solicitudes por minuto","should_abstain":false,"evidence_terms":["120 solicitudes por minuto"]}
+{"id":"orbe-15","question":"¿Qué devuelve la API cuando se supera el límite?","reference_answer":"HTTP 429 y Retry-After: 30","should_abstain":false,"evidence_terms":["HTTP 429", "Retry-After: 30"]}
+{"id":"orbe-16","question":"¿Cuántos registros admite un lote?","reference_answer":"500 registros","should_abstain":false,"evidence_terms":["500 registros"]}
+{"id":"orbe-17","question":"¿Con qué prefijo empiezan los identificadores?","reference_answer":"ORB-","should_abstain":false,"evidence_terms":["ORB-"]}
+{"id":"orbe-18","question":"¿Qué estados puede tener un registro?","reference_answer":"Pendiente, procesando, completado y fallido","should_abstain":false,"evidence_terms":["pendiente", "procesando", "completado", "fallido"]}
+{"id":"orbe-19","question":"¿Cuántos reintentos realiza el servicio?","reference_answer":"3 reintentos","should_abstain":false,"evidence_terms":["3 reintentos"]}
+{"id":"orbe-20","question":"¿Cuánto espera entre reintentos?","reference_answer":"10 segundos","should_abstain":false,"evidence_terms":["10 segundos"]}
+{"id":"orbe-21","question":"¿Cuál es la zona horaria del servicio?","reference_answer":"Europe/Madrid","should_abstain":false,"evidence_terms":["Europe/Madrid"]}
+{"id":"orbe-22","question":"¿Qué días atiende soporte?","reference_answer":"De lunes a viernes","should_abstain":false,"evidence_terms":["lunes a viernes"]}
+{"id":"orbe-23","question":"¿Cuál es el horario de soporte?","reference_answer":"De 09:00 a 17:00, hora de Madrid","should_abstain":false,"evidence_terms":["09:00 a 17:00"]}
+{"id":"orbe-24","question":"¿Cuál es el correo de soporte?","reference_answer":"ayuda@orbe.example","should_abstain":false,"evidence_terms":["ayuda@orbe.example"]}
+{"id":"orbe-25","question":"¿Con qué algoritmo se cifran los datos almacenados?","reference_answer":"AES-256","should_abstain":false,"evidence_terms":["AES-256"]}
+{"id":"orbe-26","question":"¿Qué protocolo se usa para las conexiones?","reference_answer":"TLS 1.2","should_abstain":false,"evidence_terms":["TLS 1.2"]}
+{"id":"orbe-27","question":"¿A qué hora se hacen las copias de seguridad?","reference_answer":"A las 02:00","should_abstain":false,"evidence_terms":["02:00"]}
+{"id":"orbe-28","question":"¿Cuántos días se conservan las copias de seguridad?","reference_answer":"14 días","should_abstain":false,"evidence_terms":["14 días"]}
+{"id":"orbe-29","question":"¿En cuánto tiempo se elimina una solicitud de datos?","reference_answer":"Hasta 7 días naturales","should_abstain":false,"evidence_terms":["7 días naturales"]}
+{"id":"orbe-30","question":"¿La aplicación ofrece inicio de sesión con Google?","reference_answer":"","should_abstain":true,"evidence_terms":[]}
+{"id":"orbe-31","question":"¿Cuál es el precio anual de la suscripción?","reference_answer":"","should_abstain":true,"evidence_terms":[]}
+{"id":"orbe-32","question":"¿Dónde están ubicadas las oficinas de Orbe?","reference_answer":"","should_abstain":true,"evidence_terms":[]}
+{"id":"orbe-33","question":"¿Qué proveedor de nube utiliza Orbe?","reference_answer":"","should_abstain":true,"evidence_terms":[]}
+{"id":"orbe-34","question":"¿Orbe tiene una aplicación móvil para iPhone?","reference_answer":"","should_abstain":true,"evidence_terms":[]}
+{"id":"orbe-35","question":"¿En qué año se fundó la empresa?","reference_answer":"","should_abstain":true,"evidence_terms":[]}

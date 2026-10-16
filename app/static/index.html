@@ -1,0 +1,872 @@
+<!doctype html>
+
+
+
+<html lang="es">
+
+
+
+<head>
+
+
+
+  <meta charset="utf-8">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+  <meta name="theme-color" content="#10182b">
+
+
+
+  <title>RAG Evaluado · Panel del proyecto</title>
+
+
+
+  <style>
+
+
+
+    :root{color-scheme:dark;--bg:#0b1020;--panel:#121a2d;--panel2:#172238;--line:#26334d;--muted:#93a2bb;--text:#edf3ff;--blue:#77aaff;--green:#55d6a5;--amber:#f3bd66;--gray:#7c8ba4}
+
+
+
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -10%,#1c3154 0,transparent 42%),var(--bg);color:var(--text);font:15px/1.5 Segoe UI,Arial,sans-serif}main{max-width:1240px;margin:auto;padding:36px 24px 60px}header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:26px}.eyebrow{color:var(--blue);font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:700}h1{margin:5px 0 8px;font-size:clamp(27px,4vw,40px);line-height:1.1;letter-spacing:-.03em}header p,.muted{color:var(--muted);margin:0}.header-actions{display:flex;gap:10px;flex-wrap:wrap}.button{border:1px solid #38517a;background:#1a2a46;color:var(--text);border-radius:10px;padding:10px 14px;text-decoration:none;font-weight:600}.button:hover{background:#243b60}.pill{white-space:nowrap;border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:var(--amber);font-size:12px}.pill.ok{color:var(--green);border-color:#27664f}.grid{display:grid;gap:14px}.metrics{grid-template-columns:repeat(4,minmax(0,1fr));margin:22px 0}.card,.panel{background:linear-gradient(145deg,rgba(23,34,56,.96),rgba(15,24,41,.96));border:1px solid var(--line);border-radius:16px}.card{padding:17px 18px;min-height:116px}.label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.value{font-size:26px;font-weight:700;margin:7px 0 2px}.hint{color:var(--muted);font-size:13px}.layout{grid-template-columns:1.35fr .85fr;align-items:start}.panel{padding:22px;margin-bottom:16px}.panel h2{font-size:17px;margin:0 0 5px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:17px}.current{border-left:3px solid var(--amber);padding:2px 0 2px 14px;margin:16px 0 20px}.current h3{font-size:16px;margin:0 0 4px}.current p{color:var(--muted);margin:0}.stages{display:grid;gap:10px}.stage{display:grid;grid-template-columns:12px 1fr auto;gap:12px;align-items:start;padding:12px;border-radius:11px;background:rgba(255,255,255,.025);border:1px solid transparent}.stage:hover{border-color:var(--line)}.dot{width:9px;height:9px;margin-top:6px;border-radius:50%;background:var(--gray)}.dot.done{background:var(--green);box-shadow:0 0 12px #55d6a555}.dot.active{background:var(--amber);box-shadow:0 0 12px #f3bd6655}.stage strong{display:block;font-size:14px}.stage small{display:block;color:var(--muted);font-size:12px;margin-top:3px}.state{font-size:11px;color:var(--muted);white-space:nowrap}.state.done{color:var(--green)}.state.active{color:var(--amber)}.feed{display:grid;gap:0}.event{position:relative;padding:0 0 17px 19px;border-left:1px solid var(--line);color:#d5deef;font-size:13px}.event:last-child{border-left-color:transparent;padding-bottom:0}.event:before{content:"";position:absolute;left:-4px;top:5px;width:7px;height:7px;background:var(--blue);border-radius:50%}.event time{display:block;color:var(--muted);font-size:11px;margin-bottom:3px}.architecture{display:flex;align-items:stretch;gap:7px;flex-wrap:wrap;margin-top:16px}.node{flex:1 1 95px;text-align:center;border:1px solid var(--line);background:#111d32;border-radius:11px;padding:12px 8px;font-weight:650;font-size:12px}.arrow{align-self:center;color:var(--blue);font-size:18px}.agent-row,.service-row,.file-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.agent-row:last-child,.service-row:last-child{border:0}.count{font-weight:750;color:var(--blue)}.service-status{color:var(--green);font-size:12px}.service-status.wait{color:var(--amber)}.file-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.file{font-family:Consolas,monospace;font-size:11px;padding:6px 8px;border:1px solid var(--line);border-radius:7px;color:#cbd7ec}.footer{color:var(--muted);font-size:12px;text-align:center;padding:12px}.refresh{color:var(--muted);font-size:11px}@media(max-width:850px){.layout{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){main{padding:24px 14px}.metrics{grid-template-columns:1fr 1fr;gap:8px}.card{padding:13px;min-height:103px}.value{font-size:21px}header{display:block}.header-actions{margin-top:15px}.panel{padding:16px}}
+
+
+
+  .eval-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:15px}.eval-item{background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:11px;padding:14px}.eval-value{font-size:23px;font-weight:750;margin:5px 0}.eval-note{margin-top:12px;color:var(--muted);font-size:12px}@media(max-width:850px){.eval-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}.department{position:relative;padding:17px;border:1px solid #324563;border-radius:16px;background:radial-gradient(ellipse at 80% 0%,#21365a 0,transparent 45%),linear-gradient(150deg,#121d32,#0f1728);overflow:hidden}.office-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}.office{position:relative;display:block;text-align:left;min-height:166px;padding:15px;border:1px solid #30405b;border-radius:13px;background:linear-gradient(145deg,#17243a,#101a2c);color:var(--text);overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s}.office:hover{transform:translateY(-3px);border-color:#6686b6;box-shadow:0 8px 25px #0005}.office.selected{border-color:#77aaff;box-shadow:0 0 0 2px #77aaff33}.office.boss{border-color:#c9a353;background:linear-gradient(145deg,#292943,#141d31)}.office.vacant{border-style:dashed;opacity:.66;background:#101827}.office-top{display:flex;align-items:center;gap:7px;color:#9eb2d0;font-size:10px;font-weight:700;letter-spacing:.1em}.office-light{width:8px;height:8px;background:#55d6a5;border-radius:50%;box-shadow:0 0 10px #55d6a5}.office.vacant .office-light{background:#718098;box-shadow:none}.office-title{position:relative;z-index:1;margin:12px 0 4px;font-size:16px}.office-role{color:#c9a353;font-size:10px;font-weight:750;letter-spacing:.11em}.office-copy{position:relative;z-index:1;max-width:75%;margin:0;color:var(--muted);font-size:12px}.office-task{position:relative;z-index:1;margin-top:9px;max-width:83%;color:#dce7fa;font-size:11px;line-height:1.35}.office-window{position:absolute;right:14px;top:38px;width:46px;height:34px;border:1px solid #526584;border-radius:5px;background:linear-gradient(90deg,transparent 48%,#344969 49%,#344969 52%,transparent 53%),linear-gradient(0deg,transparent 48%,#344969 49%,#344969 52%,transparent 53%),linear-gradient(135deg,#325078,#1b2a43)}.office-desk{position:absolute;right:15px;bottom:16px;width:64px;height:7px;border-radius:3px;background:#52617a}.office-desk:before{content:"";position:absolute;right:17px;bottom:7px;width:25px;height:20px;border:2px solid #748aa8;border-radius:4px;background:linear-gradient(145deg,#273f60,#111b2d)}.office-desk:after{content:"";position:absolute;right:24px;top:7px;width:3px;height:16px;background:#52617a;box-shadow:13px 0 #52617a}.department-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.department-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.hallway{position:relative;height:68px;margin-top:14px;border:1px solid #31415b;border-radius:12px;background:repeating-linear-gradient(90deg,#18243a 0,#18243a 42px,#1c2940 43px,#1c2940 84px);overflow:hidden}.hallway:before{content:"PASILLO DEL DEPARTAMENTO";position:absolute;left:14px;top:8px;color:#7e91ae;font-size:9px;letter-spacing:.12em;font-weight:700}.hallway:after{content:"";position:absolute;left:0;right:0;top:49px;border-top:1px dashed #43536e}.walking-orb{position:absolute;z-index:2;left:2%;top:29px;display:flex;align-items:center;gap:7px;animation:walk 14s ease-in-out infinite alternate}.orb-face{position:relative;width:29px;height:29px;flex:0 0 29px;border:2px solid #d5e5ff;border-radius:50%;background:radial-gradient(circle at 30% 25%,#a9ceff,#638ef0 42%,#3548a6);box-shadow:0 0 15px #77aaff88}.orb-face:before{content:"";position:absolute;left:8px;top:9px;width:3px;height:3px;background:#10182b;border-radius:50%;box-shadow:9px 0 #10182b}.orb-face:after{content:"";position:absolute;left:9px;top:15px;width:9px;height:4px;border-bottom:2px solid #10182b;border-radius:50%}.walker-label{padding:3px 7px;border:1px solid #536b92;border-radius:999px;background:#121d32;color:#e2ebff;font-size:10px;font-weight:700;white-space:nowrap}.hallway.paused .walking-orb{animation-play-state:paused}.department-note{margin:10px 2px 0;color:#a6b5ca;font-size:12px}.department-note strong{color:#e3edff}@keyframes walk{from{left:2%}to{left:calc(100% - 210px)}}@media(max-width:850px){.office-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.office-grid{grid-template-columns:1fr}.department-head{align-items:flex-start;flex-direction:column}.office{min-height:145px}}@media(prefers-reduced-motion:reduce){.walking-orb{animation:none;left:2%}}  .hallway:before{content:attr(data-caption);max-width:calc(100% - 24px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+
+
+  .office.completed{opacity:.78;border-style:dashed}.office.completed .office-light{background:#8795aa;box-shadow:none}
+
+
+
+  .office.visit-target{border-color:#f3bd66;box-shadow:0 0 0 2px #f3bd6638,0 0 24px #f3bd6622}
+
+
+
+  .office-status{font-size:10px;color:#55d6a5;font-weight:700;letter-spacing:.06em}.office.completed .office-status{color:#a6b5ca}
+
+
+
+  .orb-face.ada{background:radial-gradient(circle at 30% 25%,#d4b4ff,#9f72ee 42%,#573a9e);box-shadow:0 0 15px #a77cff88}
+
+
+
+  .orb-face.vega{background:radial-gradient(circle at 30% 25%,#b2f7dc,#40bd91 42%,#1d765e);box-shadow:0 0 15px #55d6a588}
+
+
+
+  .walking-orb.visiting{left:var(--from-x);top:29px;animation:office-visit 4.6s cubic-bezier(.2,.75,.25,1) forwards}
+
+
+
+  .walking-orb.visiting .walker-label{border-color:#f3bd66}
+
+
+
+  .hallway.paused .walking-orb.visiting{animation-play-state:paused}
+
+
+
+  .department-note .answer{display:block;margin-top:5px;color:#55d6a5}
+
+
+
+  .button:disabled{opacity:.45;cursor:not-allowed}
+
+
+
+  @keyframes office-visit{0%{left:var(--from-x);top:-18px;opacity:0}14%{top:29px;opacity:1}78%{left:var(--to-x);top:29px;opacity:1}100%{left:var(--to-x);top:-18px;opacity:.9}}
+
+
+
+  @media(prefers-reduced-motion:reduce){.walking-orb.visiting{animation:none;left:var(--to-x);top:29px;opacity:1}}  .history-panel{margin-top:16px;padding-top:15px;border-top:1px solid var(--line)}
+
+  .history-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+
+  .history-head h3{font-size:14px;margin:0}.history-control{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}
+
+  .history-control select{background:#111d32;color:var(--text);border:1px solid #38517a;border-radius:8px;padding:7px 10px}
+
+  .history-chart{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+
+  .history-run{border:1px solid var(--line);background:#101a2c;border-radius:10px;padding:12px}
+
+  .history-run.current-run{border-color:#77aaff;box-shadow:inset 0 0 0 1px #77aaff33}
+
+  .history-run-head{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:9px}
+
+  .history-run-head strong{color:#e7efff}.history-run-head span{color:var(--blue);font-weight:750}
+
+  .history-track{height:8px;border-radius:99px;background:#27354c;overflow:hidden}
+
+  .history-bar{height:100%;border-radius:99px;background:linear-gradient(90deg,#5a83e8,#55d6a5);transition:width .45s ease}
+
+  .history-summary{margin:10px 0 0;color:var(--muted);font-size:12px}
+
+  @media(max-width:520px){.history-chart{grid-template-columns:1fr}}  .eval-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+  #eval-run-state{display:block;margin-top:6px;color:var(--muted)}</style>
+
+
+
+</head>
+
+
+
+<body>
+
+
+
+<main>
+
+
+
+  <header>
+
+
+
+    <div><div class="eyebrow">Panel de seguimiento</div><h1>RAG Evaluado</h1><p>Estado del proyecto, componentes, próximos pasos y agentes activos.</p></div>
+
+
+
+    <div class="header-actions"><span id="live" class="pill">Conectando…</span><a class="button" href="http://localhost:8001/chat.html">Abrir chat RAG</a><a class="button" href="http://localhost:8000/docs">Abrir API</a></div>
+
+
+
+  </header>
+
+
+
+  <section class="grid metrics">
+
+
+
+    <article class="card"><div class="label">Fases completadas</div><div class="value" id="done-count">—</div><div class="hint">del plan del proyecto</div></article>
+
+
+
+    <article class="card"><div class="label">Trabajo actual</div><div class="value" id="current-short">—</div><div class="hint" id="current-state">Leyendo estado</div></article>
+
+
+
+    <article class="card"><div class="label">Agentes activos</div><div class="value" id="agent-count">—</div><div class="hint" id="agent-detail">Jefe y delegados</div></article>
+
+
+
+    <article class="card"><div class="label">Servicios</div><div class="value" id="services-short">—</div><div class="hint">API y Ollama</div></article>
+
+
+
+  </section>
+
+
+
+    <section class="panel"><div class="department"><div class="department-head"><div><div class="eyebrow">Departamento de operaciones</div><h2 style="font-size:21px;margin:3px 0">Las oficinas del equipo</h2><div id="department-team" class="muted">Cargando equipo...</div></div><div class="department-actions"><span id="office-count" class="pill">Preparando oficinas</span><button id="replay-visit" class="button" type="button" disabled>Repetir consulta</button><button id="motion-toggle" class="button" type="button">Pausar recorrido</button></div></div><div id="office-list" class="office-grid"></div><div id="department-hallway" class="hallway" data-caption="PASILLO · CODEX RECORRE EL DEPARTAMENTO"><div class="walking-orb"><span class="orb-face"></span><span class="walker-label">CODEX · JEFE</span></div></div><div id="department-note" class="department-note"><strong>Selecciona una oficina</strong> para ver el trabajo asignado. La bolita recorre el pasillo mientras coordina.</div></div></section><section class="panel" id="evaluation-panel"><div class="panel-head"><div><h2>Evaluacion del sistema</h2><div id="eval-total" class="muted">Sin resultados</div></div><div class="eval-actions"><span class="pill">Umbral 0,75</span><button id="run-evaluation" class="button" type="button">Ejecutar evaluación (35 casos)</button></div></div><div class="eval-grid"><div class="eval-item"><div class="label">Acierto global</div><div id="eval-accuracy" class="eval-value">—</div><div class="hint">Regla de referencia del runner</div></div><div class="eval-item"><div class="label">F1 medio respondible</div><div id="eval-f1" class="eval-value">—</div><div class="hint">Coincidencia con la respuesta esperada</div></div><div class="eval-item"><div class="label">Cobertura de citas</div><div id="eval-citation" class="eval-value">—</div><div class="hint">Solo entre respuestas no abstencionistas</div></div><div class="eval-item"><div class="label">Evidencia presente en citas</div><div id="eval-evidence" class="eval-value">—</div><div class="hint">Terminos de evidencia de referencia</div></div><div class="eval-item"><div class="label">Falsas abstenciones</div><div id="eval-false-abstention" class="eval-value">—</div><div class="hint">Preguntas respondibles que el sistema rehuso</div></div><div class="eval-item"><div class="label">Inventa ante falta de fuente</div><div id="eval-unsupported" class="eval-value">—</div><div class="hint">Respuestas emitidas en casos sin respuesta</div></div></div><div class="eval-note">Umbral actual 0,75 frente a 0,45 · 35 casos en cada pasada · juez de fidelidad no ejecutado. <span id="eval-run-state" role="status" aria-live="polite">Cada nueva pasada se añade al historial.</span></div><div class="history-panel"><div class="history-head"><h3>Comparar mediciones</h3><label class="history-control" for="history-metric">Métrica<select id="history-metric"><option value="accuracy_rate">Acierto global</option><option value="answerable_mean_token_f1">F1 respondible</option><option value="citation_evidence_anchor_rate">Evidencia en citas</option><option value="false_abstention_rate_on_answerable">Falsas abstenciones</option></select></label></div><div id="history-chart" class="history-chart"></div><p id="history-summary" class="history-summary">Selecciona una métrica para comparar las pruebas.</p></div></section>
+
+
+
+<section class="grid layout">
+
+
+
+    <div>
+
+
+
+      <article class="panel">
+
+
+
+        <div class="panel-head"><div><h2>Ruta del proyecto</h2><div class="muted">Qué está listo y qué falta</div></div><span id="updated" class="refresh"></span></div>
+
+
+
+        <div class="current"><h3 id="current-title">Cargando…</h3><p id="current-detail"></p></div>
+
+
+
+        <div id="stages" class="stages"></div>
+
+
+
+      </article>
+
+
+
+      <article class="panel"><h2>Cómo funciona el sistema</h2><div class="muted">Flujo de documentos a respuesta evaluada</div><div class="architecture"><div class="node">Documento<br><span class="muted">PDF / TXT / MD</span></div><span class="arrow">→</span><div class="node">Fragmentos<br><span class="muted">pypdf / chunking</span></div><span class="arrow">→</span><div class="node">ChromaDB<br><span class="muted">búsqueda vectorial</span></div><span class="arrow">→</span><div class="node">Ollama<br><span class="muted">respuesta + citas</span></div><span class="arrow">→</span><div class="node">Evaluación<br><span class="muted">acierto / abstención</span></div></div></article>
+
+
+
+    </div>
+
+
+
+    <aside>
+
+
+
+      <article class="panel"><div class="panel-head"><div><h2>Equipo y agentes</h2><div class="muted">Estado real de esta sesión</div></div></div><div class="agent-row"><span>Jefe del proyecto</span><span id="primary-agents" class="count">—</span></div><div class="agent-row"><span>Delegados</span><span id="delegated-agents" class="count">—</span></div><p class="muted" style="font-size:12px;margin:12px 0 0">Las oficinas muestran el rol y si cada tarea sigue activa o terminó.</p></article>
+
+
+
+      <article class="panel"><div class="panel-head"><div><h2>Actividad reciente</h2><div class="muted">Cambios y comprobaciones</div></div></div><div id="activity" class="feed"></div></article>
+
+
+
+      <article class="panel"><h2>Servicios locales</h2><div class="service-row"><span>FastAPI · puerto 8000</span><span id="api-status" class="service-status wait">consultando</span></div><div class="service-row"><span>Ollama · puerto 11434</span><span id="ollama-status" class="service-status wait">consultando</span></div><div class="service-row"><span>Modelo generativo</span><span id="model-status" class="service-status wait">consultando</span></div><div class="service-row"><span>Embeddings multilingües</span><span class="service-status wait">pendiente de primera ingesta</span></div></article>
+
+
+
+      <article class="panel"><h2>Archivos principales</h2><div class="file-list" id="files"></div><p class="muted" style="font-size:12px;margin:14px 0 0">Ruta local del proyecto en este equipo.</p></article>
+
+
+
+    </aside>
+
+
+
+  </section>
+
+
+
+  <div class="footer">Actualización automática cada 10 segundos · Registro detallado en archivo.md</div>
+
+
+
+</main>
+
+
+
+<script>
+
+
+
+const $=id=>document.getElementById(id);
+
+
+
+function badge(el, text, ok){el.textContent=text;el.className='service-status '+(ok?'':'wait')}
+
+
+
+function escapeHTML(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+
+
+function renderDepartment(s){
+
+
+
+  const primary=Math.max(1,Number(s.agents?.primary||1));
+
+
+
+  const delegated=Math.max(0,Number(s.agents?.delegated||0));
+
+
+
+  const completedDelegates=Math.max(0,Number(s.agents?.completed_delegates||0));
+
+
+
+  const fallback=[{id:'codex',name:'Codex',role:'JEFE · RAG',task:s.current?.title||'Coordinando el proyecto',status:'working'},...Array.from({length:Math.max(0,primary-1)},(_,i)=>({id:'primary-'+i,name:'Agente principal '+(i+2),role:'AGENTE',task:'Trabajo principal',status:'working'})),...Array.from({length:delegated},(_,i)=>({id:'delegate-'+i,name:'Subagente '+(i+1),role:'DELEGADO',task:'Trabajo delegado',status:'working'}))];
+
+
+
+  const roster=Array.isArray(s.agents?.staff)&&s.agents.staff.length?s.agents.staff:fallback;
+
+
+
+  const people=roster.map((p,i)=>({...p,id:p.id||'worker-'+i,kind:p.kind||(i===0?'boss':'agent'),status:p.status||'working'}));
+
+
+
+  const free=Math.max(0,3-people.length);
+
+
+
+  const active=people.filter(p=>p.status==='working').length;
+
+
+
+  const finished=people.filter(p=>p.status==='completed').length;
+
+
+
+  $('department-team').textContent=people.length+' en el equipo · '+active+' activos · '+finished+' tareas terminadas';
+
+
+
+  $('office-count').textContent=people.length+' oficinas · '+free+' libres';
+
+
+
+  const exchange=s.agents?.latest_interaction;
+
+
+
+  const target=exchange&&people.find(p=>p.id===exchange.to_id);
+
+
+
+  const sender=exchange&&people.find(p=>p.id===exchange.from_id);
+
+
+
+  $('office-list').innerHTML=people.map((p,i)=>{
+
+
+
+    const isTarget=!!(exchange&&p.id===exchange.to_id);
+
+
+
+    const isDone=p.status==='completed';
+
+
+
+    const status=isDone?'TAREA TERMINADA':p.status==='working'?'TRABAJANDO':'EN ESPERA';
+
+
+
+    const description=p.description||(i===0?'Jefe del equipo · coordina RAG y agentes':'Agente con oficina propia');
+
+
+
+    return '<button type="button" class="office '+p.kind+(i===0?' selected':'')+(isDone?' completed':'')+(isTarget?' visit-target':'')+'" data-worker="'+i+'" data-id="'+escapeHTML(p.id)+'" aria-pressed="'+(i===0)+'"><span class="office-window"></span><span class="office-top"><i class="office-light"></i><span class="office-status">'+status+'</span></span><div class="office-role">'+escapeHTML(p.role)+'</div><h3 class="office-title">'+escapeHTML(p.name)+'</h3><p class="office-copy">'+escapeHTML(description)+'</p><div class="office-task">Ahora: '+escapeHTML(p.task)+'</div><span class="office-desk"></span></button>';
+
+
+
+  }).join('')+Array.from({length:free},(_,i)=>'<div class="office vacant"><span class="office-window"></span><span class="office-top"><i class="office-light"></i>DISPONIBLE</span><div class="office-role">SIN AGENTE</div><h3 class="office-title">Oficina libre '+(i+1)+'</h3><p class="office-copy">Se asignara al delegar una tarea.</p><span class="office-desk"></span></div>').join('');
+
+
+
+  const hall=$('department-hallway');
+
+
+
+  const walker=hall.querySelector('.walking-orb');
+
+
+
+  const replay=$('replay-visit');
+
+
+
+  if(sender&&target){
+
+
+
+    const fromIndex=people.findIndex(p=>p.id===sender.id);
+
+
+
+    const toIndex=people.findIndex(p=>p.id===target.id);
+
+
+
+    const positions=['2%','calc(50% - 85px)','calc(100% - 210px)'];
+
+
+
+    hall.dataset.caption=sender.name+' SALE AL PASILLO · VISITA LA OFICINA DE '+target.name.toUpperCase();
+
+
+
+    walker.innerHTML='<span class="orb-face '+escapeHTML(sender.id)+'"></span><span class="walker-label">'+escapeHTML(sender.name)+' → '+escapeHTML(target.name)+'</span>';
+
+
+
+    walker.style.setProperty('--from-x',positions[Math.min(fromIndex,2)]||'2%');
+
+
+
+    walker.style.setProperty('--to-x',positions[Math.min(toIndex,2)]||'2%');
+
+
+
+    const visitId=String(exchange.id||sender.id+'-'+target.id+'-'+exchange.question);
+
+
+
+    if(hall.dataset.visitId!==visitId){
+
+
+
+      hall.dataset.visitId=visitId;
+
+
+
+      walker.classList.remove('visiting');
+
+
+
+      void walker.offsetWidth;
+
+
+
+      walker.classList.add('visiting');
+
+
+
+    }
+
+
+
+    replay.disabled=false;
+
+
+
+    const state=exchange.state==='resuelta'?'Consulta resuelta':'Consulta en curso';
+
+
+
+    $('department-note').innerHTML='<strong>'+escapeHTML(sender.name)+' ('+escapeHTML(sender.role)+') → '+escapeHTML(target.name)+' ('+escapeHTML(target.role)+')</strong> · '+escapeHTML(state)+'<br>Pregunta: “'+escapeHTML(exchange.question||'Consulta de coordinación')+'”'+(exchange.answer?'<span class="answer">Respuesta: '+escapeHTML(exchange.answer)+'</span>':'');
+
+
+
+  }else{
+
+
+
+    hall.dataset.caption='PASILLO · CODEX RECORRE EL DEPARTAMENTO';
+
+
+
+    walker.innerHTML='<span class="orb-face"></span><span class="walker-label">CODEX · JEFE</span>';
+
+
+
+    walker.classList.remove('visiting');
+
+
+
+    walker.style.removeProperty('--from-x');
+
+
+
+    walker.style.removeProperty('--to-x');
+
+
+
+    replay.disabled=true;
+
+
+
+    $('department-note').innerHTML='<strong>Equipo listo.</strong> Selecciona una oficina para ver el trabajo de cada agente.';
+
+
+
+  }
+
+
+
+}let evaluationHistory=[];
+
+function renderHistory(history){
+
+  evaluationHistory=Array.isArray(history)?history:[];
+
+  const key=$('history-metric').value;
+
+  const labels={accuracy_rate:'Acierto global',answerable_mean_token_f1:'F1 medio respondible',citation_evidence_anchor_rate:'Evidencia en citas',false_abstention_rate_on_answerable:'Falsas abstenciones'};
+
+  const rows=evaluationHistory.filter(item=>typeof item[key]==='number');
+
+  if(!rows.length){
+
+    $('history-chart').innerHTML='<div class="muted">Aún no hay mediciones guardadas.</div>';
+
+    $('history-summary').textContent='Cada evaluación guardada aparecerá aquí.';
+
+    return;
+
+  }
+
+  $('history-chart').innerHTML=rows.map((item,index)=>{
+
+    const value=Math.max(0,Math.min(100,item[key]*100));
+
+    return '<div class="history-run '+(index===rows.length-1?'current-run':'')+'"><div class="history-run-head"><strong>'+escapeHTML(item.name)+'</strong><span>'+value.toLocaleString('es-ES',{maximumFractionDigits:1})+'%</span></div><div class="history-track" role="img" aria-label="'+escapeHTML(labels[key])+': '+value.toLocaleString('es-ES',{maximumFractionDigits:1})+' por ciento"><div class="history-bar" style="width:'+value+'%"></div></div></div>';
+
+  }).join('');
+
+  if(rows.length<2){$('history-summary').textContent='Hace falta otra pasada para mostrar el cambio entre versiones.';return}
+
+  const before=rows[0][key],after=rows[rows.length-1][key];
+
+  const lowerIsBetter=key==='false_abstention_rate_on_answerable';
+
+  const improvement=lowerIsBetter?before-after:after-before;
+
+  const points=Math.abs(improvement*100).toLocaleString('es-ES',{maximumFractionDigits:1});
+
+  const direction=improvement>0?'Mejora':improvement<0?'Empeora':'Sin cambio';
+
+  $('history-summary').textContent=labels[key]+': '+direction+' de '+points+' puntos porcentuales entre '+rows[0].name+' y '+rows[rows.length-1].name+'.';
+
+}function render(s){
+
+
+
+  renderDepartment(s);
+
+
+
+  renderHistory(s.evaluation?.history);
+
+
+
+  const complete=s.stages.filter(x=>x.state==='Completado').length;
+
+
+
+  $('done-count').textContent=complete+' / '+s.stages.length;
+
+
+
+  $('current-short').textContent=s.current.state;
+
+
+
+  $('current-state').textContent=s.current.detail;
+
+
+
+  $('current-title').textContent=s.current.title;
+
+
+
+  $('current-detail').textContent=s.current.detail;
+
+
+
+  const activeAgents=Array.isArray(s.agents.staff)?s.agents.staff.filter(agent=>agent.status==='working').length:(s.agents.primary+s.agents.delegated);
+
+  $('agent-count').textContent=activeAgents+' activos';
+
+
+
+  $('agent-detail').textContent=s.agents.primary+' jefe · '+s.agents.delegated+' delegados activos · '+Number(s.agents.completed_delegates||0)+' terminados';
+
+
+
+  $('primary-agents').textContent=s.agents.primary;
+
+
+
+  $('delegated-agents').textContent=s.agents.delegated+' activos · '+Number(s.agents.completed_delegates||0)+' tareas finalizadas';
+
+
+
+  $('stages').innerHTML=s.stages.map(x=>`<div class="stage"><span class="dot ${x.state==='Completado'?'done':x.state==='En curso'?'active':''}"></span><div><strong>${x.name}</strong><small>${x.detail}</small></div><span class="state ${x.state==='Completado'?'done':x.state==='En curso'?'active':''}">${x.state}</span></div>`).join('');
+
+
+
+  $('activity').innerHTML=s.activity.map(x=>`<div class="event"><time>${x.time}</time>${x.text}</div>`).join('');
+
+
+
+  $('files').innerHTML=s.files.map(x=>`<span class="file">${x}</span>`).join('');
+
+
+
+  $('updated').textContent='Actualizado '+new Date(s.updated_at).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+
+
+
+  const e=s.evaluation||{};
+
+
+
+  const rate=v=>typeof v==='number'?(v*100).toLocaleString('es-ES',{maximumFractionDigits:1})+'%':'—';
+
+
+
+  $('eval-total').textContent=(e.total_cases||0)+' casos · '+(e.model||'modelo no indicado')+' · juez: '+(e.judge||'no ejecutado');
+  const runButton=$('run-evaluation');
+  const runState=$('eval-run-state');
+  const runPending=e.run_state==='running';
+  runButton.disabled=runPending;
+  runButton.textContent=runPending?'Evaluando casos locales…':'Ejecutar evaluación (35 casos)';
+  if(runPending)runState.textContent='Ollama está procesando los casos. El estado se actualiza al terminar.';
+  else if(e.run_state==='completed')runState.textContent='Última pasada guardada en el historial.';
+  else if(e.run_state==='failed')runState.textContent='La última pasada falló. Revisa los logs de la API.';
+
+
+
+  $('eval-accuracy').textContent=rate(e.accuracy_rate);
+
+
+
+  $('eval-f1').textContent=rate(e.answerable_mean_token_f1);
+
+
+
+  $('eval-citation').textContent=rate(e.citation_coverage);
+
+
+
+  $('eval-evidence').textContent=rate(e.citation_evidence_anchor_rate);
+
+
+
+  $('eval-false-abstention').textContent=rate(e.false_abstention_rate_on_answerable);
+
+
+
+  $('eval-unsupported').textContent=rate(e.unsupported_answer_rate_on_unanswerable);
+
+
+
+  const api=!!s.runtime?.api;
+
+
+
+  const ollama=!!s.runtime?.ollama;
+
+
+
+  const hasModel=!!s.runtime?.model_installed;
+
+
+
+  badge($('api-status'),api?'activo':'sin conexión',api);
+
+
+
+  badge($('ollama-status'),ollama?'activo':'sin conexión',ollama);
+
+
+
+  badge($('model-status'),hasModel?'instalado':'descarga en curso',hasModel);
+
+
+
+  $('services-short').textContent=api&&ollama?'2 activos':api?'1 activo':'—';
+
+
+
+  $('live').textContent=api?'Actualizado en vivo':'Sin conexión con la API';
+
+
+
+  $('live').className='pill '+(api?'ok':'');
+
+
+
+}
+
+
+
+async function refresh(){
+
+
+
+  try {
+
+
+
+    const controller=new AbortController();
+
+
+
+    const timeout=setTimeout(()=>controller.abort(),2500);
+
+
+
+    const r=await fetch('http://localhost:8000/api/status',{cache:'no-store',signal:controller.signal});
+
+
+
+    clearTimeout(timeout);
+
+
+
+    if(!r.ok)throw Error(r.status);
+
+
+
+    render(await r.json());
+
+
+
+  } catch(e) {
+
+
+
+    try {
+
+
+
+      const r=await fetch('./project-status.json',{cache:'no-store'});
+
+
+
+      if(!r.ok)throw Error(r.status);
+
+
+
+      render(await r.json());
+
+
+
+      $('live').textContent='Vista local · API ocupada';
+
+
+
+      $('live').className='pill';
+
+
+
+    } catch (_) {
+
+
+
+      $('live').textContent='API no disponible';
+
+
+
+      $('live').className='pill';
+
+
+
+    }
+
+
+
+  }
+
+
+
+}
+
+
+
+$('office-list').addEventListener('click',event=>{
+
+
+
+  const card=event.target.closest('.office[data-worker]');
+
+
+
+  if(!card)return;
+
+
+
+  document.querySelectorAll('.office.selected').forEach(x=>x.classList.remove('selected'));
+
+
+
+  document.querySelectorAll('.office[data-worker]').forEach(x=>x.setAttribute('aria-pressed','false'));
+
+
+
+  card.classList.add('selected');card.setAttribute('aria-pressed','true');
+
+
+
+  const title=card.querySelector('.office-title')?.textContent||'Agente';
+
+
+
+  const role=card.querySelector('.office-role')?.textContent||'';
+
+
+
+  const task=card.querySelector('.office-task')?.textContent||'Sin tarea indicada';
+
+
+
+  $('department-note').innerHTML='<strong>'+escapeHTML(title)+' · '+escapeHTML(role)+'</strong><br>'+escapeHTML(task);
+
+
+
+});
+
+
+
+$('history-metric').addEventListener('change',()=>renderHistory(evaluationHistory));
+
+$('replay-visit').addEventListener('click',()=>{
+
+
+
+  const walker=$('department-hallway').querySelector('.walking-orb');
+
+
+
+  if(!walker||$('replay-visit').disabled)return;
+
+
+
+  walker.classList.remove('visiting');
+
+
+
+  void walker.offsetWidth;
+
+
+
+  walker.classList.add('visiting');
+
+
+
+});
+
+
+
+$('motion-toggle').addEventListener('click',()=>{
+
+
+
+  const hall=$('department-hallway');hall.classList.toggle('paused');
+
+
+
+  $('motion-toggle').textContent=hall.classList.contains('paused')?'Reanudar recorrido':'Pausar recorrido';
+
+
+
+});$('run-evaluation').addEventListener('click',async()=>{
+  const button=$('run-evaluation');
+  const state=$('eval-run-state');
+  button.disabled=true;
+  button.textContent='Evaluando casos locales…';
+  state.textContent='Ollama procesa 35 preguntas. Puede tardar unos minutos; el dashboard seguirá mostrando la actividad.';
+  try{
+    const response=await fetch('http://localhost:8000/api/evaluation/run',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({use_judge:false})
+    });
+    const result=await response.json();
+    if(!response.ok)throw new Error(result.detail||('HTTP '+response.status));
+    state.textContent='Terminó: '+(Number(result.accuracy_rate||0)*100).toLocaleString('es-ES',{maximumFractionDigits:1})+'% de acierto. Historial actualizado.';
+    await refresh();
+  }catch(error){
+    state.textContent='No se pudo completar: '+String(error.message||error);
+    button.disabled=false;
+    button.textContent='Reintentar evaluación';
+  }
+});
+refresh();setInterval(refresh,10000);
+
+
+
+</script>
+
+
+
+</body>
+
+
+
+</html>
