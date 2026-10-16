@@ -109,8 +109,7 @@
     "archivo.md",
     "app/static/chat.html",
     "tests/test_ingestion_chunking.py",
-    "tests/test_evaluation_metrics.py",
-    "PROMPT_CONTINUACION.md"
+    "tests/test_evaluation_metrics.py"
   ],
   "activity": [
     {
@@ -120,10 +119,6 @@
     {
       "time": "15:18",
       "text": "Evaluación automática iniciada desde el proyecto."
-    },
-    {
-      "time": "15:16",
-      "text": "Evaluación guardada: umbral 0.75, acierto 42.9%, falsas abstenciones 31.0%."
     },
     {
       "time": "15:11",
@@ -175,14 +170,6 @@
         "answerable_mean_token_f1": 0.2129,
         "citation_evidence_anchor_rate": 0.4483,
         "false_abstention_rate_on_answerable": 0.5517
-      },
-      {
-        "name": "Umbral 0.75 · 16/10 15:16",
-        "threshold": 0.75,
-        "accuracy_rate": 0.4286,
-        "answerable_mean_token_f1": 0.3088,
-        "citation_evidence_anchor_rate": 0.5172,
-        "false_abstention_rate_on_answerable": 0.3103
       },
       {
         "name": "Umbral 0.75 · 16/10 15:21",
