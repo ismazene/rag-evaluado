@@ -155,3 +155,4 @@ Los agentes delegados pertenecen a esta sesión y podrían no sobrevivir al camb
 - Pruebas en navegador real (Chrome headless con Playwright): chat (pregunta, subida de archivo, pregunta sobre el archivo subido), dashboard (pausa/reanudar, repetir consulta, selector de metrica, boton de evaluacion completo) y consola sin errores. Se corrigio: 404 de favicon, texto obsoleto "pendiente de primera ingesta", entrada contaminada (42,9 %) del historial y referencia a PROMPT_CONTINUACION.md.
 - Nota operativa: si se modifica el indice ChromaDB desde otro proceso (docker exec) hay que reiniciar la API; si no, /api/evaluation/run falla con 'NoneType' object is not subscriptable.
 - Capturas del chat y del dashboard anadidas en docs/ y enlazadas en el README; seccion de operacion y resolucion de problemas.
+- Anadido CLAUDE.md con comandos, reglas de trabajo y seguridad para retomar el proyecto en sesiones nuevas.
